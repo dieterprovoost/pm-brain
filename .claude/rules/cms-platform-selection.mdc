@@ -1,0 +1,107 @@
+---
+description: Guide the CMS platform selection exercise for proposal work, covering evaluation criteria, scoring, and recommendation structure.
+alwaysApply: false
+---
+
+# CMS Platform Selection
+
+Use this rule when helping evaluate and recommend a CMS platform as part of a proposal or solution design exercise.
+
+## Exercise Goal
+
+Produce a structured, defensible platform recommendation that aligns the client's requirements, constraints, and strategic context with the best-fit CMS option.
+
+## Process
+
+Follow a three-stage exercise:
+
+### Stage 1 — Requirements Gathering
+
+Before evaluating any platform, capture the following:
+
+**Functional requirements**
+- Content types and data models needed
+- Editorial workflow complexity (single editor vs. multi-role, multi-locale, approval chains)
+- Personalisation, A/B testing, or targeting needs
+- Multilingual / multi-site / multi-channel requirements
+
+**Non-functional requirements**
+- Expected traffic volumes and scalability targets
+- Uptime and SLA expectations
+- Security and compliance constraints (GDPR, ISO 27001, sector-specific)
+- Performance budgets (TTFB, Core Web Vitals)
+
+**Technical context**
+- Existing technology stack and integration landscape
+- Hosting preference (cloud-managed SaaS, self-hosted, hybrid)
+- Front-end architecture (traditional coupled, headless, composable)
+- In-house CMS expertise and team size
+
+**Commercial context**
+- Budget range (licence, implementation, ongoing)
+- Timeline and go-live constraints
+- Vendor preference or exclusions
+
+**Strategic context**
+- Ownership model preference (open-source vs. proprietary)
+- Long-term roadmap alignment
+- Vendor lock-in tolerance
+
+Exit Stage 1 when all must-have requirements are documented and confirmed with the stakeholder.
+
+### Stage 2 — Platform Longlist and Scoring
+
+**Build the longlist** from candidates relevant to the client's context. Do not consider other platforms than the ones listed below. Common categories:
+
+| Category | Examples |
+|---|---|
+| Enterprise SaaS (headless) | Storyblok, Contentstack, Sanity |
+| Open-source (self-hosted) | Drupal, WordPress, Craft CMS |
+| Headless (self-hosted) | Drupal, Craft CMS, Payload CMS |
+| Composable / DXP | Optimizely SaaS, Sitecore |
+| E-commerce | Commercetools, Shopware |
+| CRM & marketing | Hubspot, Spotler |
+| Customer data & insights | Contentsquare, Databricks |
+
+**Score each platform** against the requirements using a weighted scoring matrix:
+
+- Assign a weight (1–3) to each requirement based on client priority
+- Score each platform per requirement (1 = poor fit, 3 = strong fit)
+- Calculate weighted total
+- Flag any hard blockers (score of 0 = automatic disqualifier)
+
+Reduce the longlist to a **shortlist of 2–3 platforms** before proceeding.
+
+### Stage 3 — Recommendation
+
+Structure the recommendation output as follows:
+
+1. **Recommended platform** — name and one-line rationale
+2. **Why it wins** — top 3 reasons tied directly to client requirements
+3. **Trade-offs and risks** — honest list of weaknesses or uncertainties
+4. **Runner-up** — brief note on when the runner-up would be preferred instead
+5. **Scoring summary** — reference or embed the weighted matrix
+6. **Next steps** — proof-of-concept, RFP to vendors, or migration planning
+
+## Output Format
+
+All CMS selection deliverables go in `deliverables/` and should follow this naming pattern:
+
+```
+deliverables/[ClientName]-CMS-Platform-Selection.md
+```
+
+The deliverable must include:
+- Executive summary (max 200 words)
+- Requirements overview (Stage 1 output)
+- Scoring matrix (Stage 2 output)
+- Recommendation section (Stage 3 output)
+
+## Key Principles
+
+- **Requirements first.** Never shortlist platforms before requirements are documented.
+- **Weight by client priority.** A feature that is irrelevant to the client should not influence the score.
+- **Separate must-haves from nice-to-haves.** Hard blockers override scoring totals.
+- **Be explicit about assumptions.** If a requirement is inferred rather than confirmed, flag it.
+- **Avoid vendor bias.** Evaluate on evidence, not familiarity or agency preference.
+- **Present trade-offs honestly.** No platform is perfect; acknowledge gaps in the recommendation.

@@ -1,11 +1,11 @@
 ---
-name: pm-brain
-description: Initialize a PM Brain — a markdown-native second brain for a product operator (PM, product lead, founder, or anyone accountable for one product or initiative) doing judgment-heavy work with scattered inputs. Detects greenfield vs. migration mode, runs a focused interview, copies the deterministic scaffold into the working directory, populates placeholders from interview answers, runs a self-test, and commits. Use when invoked via `/pm-brain` or when the user asks to set up a PM Brain.
+name: sa-brain
+description: Initialize an SA Brain — a markdown-native second brain for a Solution Architect doing judgment-heavy technology decisions with scattered inputs. Detects greenfield vs. migration mode, runs a focused interview, copies the deterministic scaffold into the working directory, populates placeholders from interview answers, runs a self-test, and commits. Use when invoked via `/sa-brain` or when the user asks to set up an SA Brain.
 ---
 
-# PM Brain — Skill
+# SA Brain — Skill
 
-This skill scaffolds and initializes a PM Brain in the current working directory. The scaffold is deterministic (static files copied as-is from `scaffold/`). The reasoning is adaptive (loaded from `prompts/` per phase).
+This skill scaffolds and initializes a SA Brain in the current working directory. The scaffold is deterministic (static files copied as-is from `scaffold/`). The reasoning is adaptive (loaded from `prompts/` per phase).
 
 ## Architectural split
 
@@ -19,22 +19,22 @@ Behavior evolves independently from structure. Schemas can change without touchi
 
 ## When to invoke
 
-- Operator runs `/pm-brain` (or pastes a setup request like "set up a PM Brain here").
-- Operator asks to add a PM Brain to an existing directory of PM artifacts.
+- Operator runs `/sa-brain` (or pastes a setup request like "set up an SA Brain here").
+- Operator asks to add an SA Brain to an existing directory of SA artifacts.
 
-Do **not** invoke this skill for routine PM Brain operations after init (ingestion, prep, review). Those are handled by the seeded `CLAUDE.md` operating manual in the target repo.
+Do **not** invoke this skill for routine SA Brain operations after init (ingestion, prep, review). Those are handled by the seeded `CLAUDE.md` operating manual in the target repo.
 
 ## Workflow
 
 ### 1. Detect mode
 
-Load `prompts/mode-detection.md`. Inspect the current working directory. Decide: **greenfield** (empty), **migration** (PM artifacts present), or **active-repo** (working repo — pause and ask).
+Load `prompts/mode-detection.md`. Inspect the current working directory. Decide: **greenfield** (empty), **migration** (SA/architecture artifacts present), or **active-repo** (working repo — pause and ask).
 
 Announce the detected mode to the operator in one line. For active-repo mode, do not proceed without confirmation.
 
 ### 2. If migration mode
 
-Load `prompts/migration.md`. **Copy** (do not move) pre-existing PM artifacts into a `source/` folder. Bulk-ingest with epistemic caution. Record cross-document conflicts for the post-scaffold contradictions block.
+Load `prompts/migration.md`. **Copy** (do not move) pre-existing SA artifacts into a `source/` folder. Bulk-ingest with epistemic caution. Record cross-document conflicts for the post-scaffold contradictions block.
 
 ### 3. Run the interview
 
@@ -63,12 +63,12 @@ Walk the copied files and substitute interview answers. Use the full **Batch →
 
 Highlights:
 
-- `knowledge/strategy.md` — north-star metric, priorities (Batch A). Non-goals start empty if PM didn't volunteer them; flag in next moves.
-- `knowledge/product/features/<slug>.md` — one file per active feature (Batch C Q1), populated from the feature schema.
+- `knowledge/strategy.md` — guiding architectural principles, priorities (Batch A). Non-goals start empty if SA didn't volunteer them; flag in next moves.
+- `knowledge/product/features/<slug>.md` — one file per active architecture component or evaluation (Batch C Q1), populated from the component schema.
 - `knowledge/product/roadmap.md` — Now / Next sections from Batch C.
 - `stakeholders/<slug>.md` — one file per stakeholder (Batch B Q1); influence + friction tagged from Batch B Q2.
 - `knowledge/org/team.md`, `knowledge/org/rituals.md`, `knowledge/org/tools.md` — from Batch B Q3 + Batch D Q1.
-- `knowledge/market/landscape.md` and/or `trends.md` — from Batch D Q3.
+- `knowledge/market/landscape.md` and/or `trends.md` — from Batch D Q3 (technology landscape signals).
 - `rules/discovery.md`, `rules/data.md` — from Batch D Q1-2.
 - `CLAUDE.md § Operating preferences` — autonomy mode + maintenance cadence (Batch E Q1-2).
 - `CLAUDE.md § Off-limits` — Batch E Q3.
@@ -90,9 +90,9 @@ Load `prompts/post-scaffold.md`. Run:
 ### 7. Commit
 
 - Run `git rev-parse --is-inside-work-tree` in the **current working directory**.
-- If already a repo: stage all scaffolded files. Single commit titled `feat: initialize PM brain`.
+- If already a repo: stage all scaffolded files. Single commit titled `feat: initialize SA brain`.
 - If not a repo: `git init` in the current working directory, then stage and commit.
-- **Never push remotely.** PM controls publication.
+- **Never push remotely.** SA controls publication.
 - If any git step fails, surface the error and stop. No destructive recovery.
 
 ### 8. Hand off
@@ -111,7 +111,7 @@ Then stop and wait for the operator's first real task.
 ## Anti-patterns
 
 - **Regenerating scaffold content.** The whole point of `scaffold/` is that it's deterministic. If you find yourself rewriting `CLAUDE.md` or a schema from scratch during init, stop — copy from `scaffold/` instead.
-- **Creating a nested `pm-brain/` subfolder.** The current working directory **is** the project root.
+- **Creating a nested `sa-brain/` subfolder.** The current working directory **is** the project root.
 - **Skipping the self-test.** Broken links are memory corruption, not cosmetic.
 - **Inventing contradictions.** If migration mode found no genuine conflicts, say so. Don't fabricate.
 - **Pushing remotely.** PM controls when and where this gets published.
@@ -119,7 +119,7 @@ Then stop and wait for the operator's first real task.
 ## Files in this skill
 
 ```
-pm-brain-skill/
+sa-brain-skill/
 ├── SKILL.md              # This file. Orchestration.
 ├── scaffold/             # Deterministic static structure. Copy as-is.
 │   ├── .claude/          # Per-brain Claude Code config (hooks + settings)

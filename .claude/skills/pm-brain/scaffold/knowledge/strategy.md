@@ -1,11 +1,11 @@
-# Strategy
+# Architecture Strategy
 
-> The north star. Loaded at the start of any prioritization, planning, or review task. Updated only deliberately — drift is surfaced, not silently absorbed.
+> The guiding north star for architecture decisions. Loaded at the start of any prioritization, planning, or review task. Updated only deliberately — drift is surfaced, not silently absorbed.
 
-## North-star metric
-<!-- From interview. One metric, with definition and current value. -->
+## Guiding architectural principle / constraint
+<!-- From interview. One or two core constraints that all architecture decisions must satisfy — e.g., "cloud-agnostic", "operational simplicity over raw performance", "avoid vendor lock-in", "security-first". These are the filter, not the goal. -->
 
-## 1–2 quarter priorities
+## 1–2 quarter architecture priorities
 <!-- 3 max. Ordered. Each with: what, why now, what success looks like. -->
 1.
 2.
@@ -16,11 +16,11 @@
 -
 
 ## Bets vs. commitments
-- **Bets** (testing): see [`hypotheses/`](../hypotheses/)
+- **Bets** (evaluating): see [`hypotheses/`](../hypotheses/)
 - **Commitments** (decided): see [`decisions/`](../decisions/)
 
 ## Last reviewed
 <!-- Date. Updated whenever strategy is meaningfully revised. -->
 
 ## Tensions
-<!-- Maintenance and ingestion append here when signals conflict with the strategy. Tensions are not rejections — new bets, features, opportunities, and user needs can inform strategy just as strategy informs them. Each entry: signal, what it tensions, possible resolutions (update strategy / reject signal / hold as open tension). PM resolves deliberately. -->
+<!-- Maintenance and ingestion append here when signals conflict with the architecture strategy. Tensions are not rejections — new constraints, technology shifts, and emerging team needs can inform strategy just as strategy informs them. Each entry: signal, what it tensions, possible resolutions (update strategy / reject signal / hold as open tension). SA resolves deliberately. -->

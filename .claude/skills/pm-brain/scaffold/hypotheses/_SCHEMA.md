@@ -11,29 +11,29 @@
 >
 > **The most common orphan-row failure:** the agent paraphrases a claim from an ingestion record into an Evidence row but forgets the tag. If you can name where the claim came from, you can tag it — there is no excuse for a tagless Evidence row when the source is identifiable. When in doubt, use `[ingestion/<path>](../ingestion/<path>)` pointing at the ingestion file you paraphrased from.
 
-Hypotheses are **feature-scoped**. One file per feature, named `<feature-slug>.md`.
+Hypotheses are **component-scoped**. One file per architecture component or evaluation, named `<component-slug>.md`.
 
-A feature can have hypotheses in two modes:
-- **Pre-ship:** generated proactively, organized by the 5 risk areas (value, usability, feasibility, viability, **other**), tested via experiments.
-- **Post-ship:** generated from observed product/analytics/interview data after launch — "why is retention dropping in week 2?" Same schema, the `Origin` field marks them as data-derived.
+A component can have hypotheses in two modes:
+- **Pre-adoption:** generated proactively, organized by the 5 risk areas (technical, integration, operational, cost/vendor, migration), tested via PoCs and benchmarks.
+- **Post-adoption:** generated from observed behavior after adoption — "why is operational overhead higher than projected?" Same schema, the `Origin` field marks them as data-derived.
 
-The `other` bucket exists because real risks don't always fit the canonical four — regulatory, ethical, partnership-dependency, brand, security, internal-political risks all show up and should be hypothesized about explicitly rather than buried.
+The fifth bucket (migration risk) is explicitly separate because getting from current state to new architecture is often the highest-risk phase — regulatory, security, and vendor-lock-in risks also land here when they don't fit the canonical four.
 
 ## File structure
 
 ```markdown
-# Hypotheses — <feature-name>
+# Hypotheses — <component-name>
 
 <!-- Paths in this file are relative to THIS file's location (hypotheses/<slug>.md). -->
 
 ## Meta
-- Feature: `../knowledge/product/features/<slug>.md`
-- Status: one of `active`, `partially-validated`, `promoted`, `demoted`, `archived`. Pick exactly one. If individual hypotheses inside the file have mixed states, the file-level `Status` reflects the dominant state; per-hypothesis status (under each H-Vn / H-Un / etc.) carries the detail. Do not invent compound file-level statuses like `active (1 partially-validated)`.
+- Component: `../knowledge/product/features/<slug>.md`
+- Status: one of `active`, `partially-validated`, `promoted`, `demoted`, `archived`. Pick exactly one. If individual hypotheses inside the file have mixed states, the file-level `Status` reflects the dominant state; per-hypothesis status (under each H-Tn / H-In / etc.) carries the detail. Do not invent compound file-level statuses like `active (1 partially-validated)`.
 - Created: YYYY-MM-DD
 - Last updated: YYYY-MM-DD
 
-## Value risk
-### H-V1: <one-sentence belief>
+## Technical risk
+### H-T1: <one-sentence belief about whether this technology solves the architectural problem>
 - **Origin:** proactive | data-derived (from <source>)
 - **Confidence:** low | medium | high
 - **Evidence for:**
@@ -56,7 +56,7 @@ Every Evidence-for / Evidence-against row MUST carry exactly one tag from the en
 | `[ingestion/<path>](../ingestion/<path>)` | Went through the synthesis pipeline. The ingestion file itself links back to a `source/` artifact. | Highest. |
 | `[source/<path>](../source/<path>)` | Direct citation to a raw artifact. Use when the source is self-explanatory and synthesis would be ceremony. | High. |
 | `(stakeholder-verbal, <name>, <YYYY-MM-DD>)` | Heard from a person, no recording or doc. | Medium — depends on the stakeholder. |
-| `(intuition, PM, <YYYY-MM-DD>)` | PM's own read, no external evidence yet. Legitimate — it's still a hypothesis input, just one with no audit anchor outside the PM's head. | Low for external defense, useful internally. |
+| `(intuition, SA, <YYYY-MM-DD>)` | SA's own read, no external evidence yet. Legitimate — it's still a hypothesis input, just one with no audit anchor outside the SA's head. | Low for external defense, useful internally. |
 | `(industry-knowledge)` | Accepted background, not specific to this product (e.g., "checkout friction reduces conversion"). | Low — flag for replacement by product-specific evidence. |
 | `(chat, no artifact)` | Synthesized in this conversation, nothing written down. Often a precursor to a future ingestion record. | Low. |
 
@@ -70,19 +70,19 @@ A row without ANY tag is an orphan claim and fails the audit check.
 
 ```markdown
 DO (path-typed via ingestion synthesis — strongest):
-- Three ops leads independently asked for weekly default  [ingestion/interviews/2026-05-02-cross-customer-synthesis.md](../ingestion/interviews/2026-05-02-cross-customer-synthesis.md)
+- Three engineering teams independently reported high operational overhead with current stack  [ingestion/assessments/2026-05-02-platform-review-synthesis.md](../ingestion/assessments/2026-05-02-platform-review-synthesis.md)
 
 DO (path-typed direct to source — self-explanatory artifact):
-- Acme reported batch-only notifications are unusable  [source/interviews/2026-04-22-acme-ops-jamie-chen.md](../source/interviews/2026-04-22-acme-ops-jamie-chen.md)
+- PoC run showed 40% latency reduction under p95 load  [source/assessments/2026-04-22-cms-poc-results.md](../source/assessments/2026-04-22-cms-poc-results.md)
 
 DO (non-path, named person):
-- Naomi confirmed Q3 priority in 1:1  (stakeholder-verbal, Naomi, 2026-05-13)
+- CTO confirmed cloud-agnostic requirement in architecture review  (stakeholder-verbal, CTO, 2026-05-13)
 
 DON'T (no tag at all — flagged as orphan):
-- Acme's ops lead reported her team has behaviorally stopped acting on daily notifications
+- The DevOps team reported significant friction with current deployment pipeline
 
 DON'T (prose citation instead of markdown link — fails the link-count check, and weakens audit):
-- Acme reported batch-only notifications are unusable (Acme interview, 2026-04-22)
+- PoC showed 40% latency reduction (PoC results, 2026-04-22)
 ```
 
 **Evidence rows are CLAIMS, not commentary.** A row under `Evidence for:` / `Evidence against:` must assert something the world told us ("Acme's ops lead said weekly batches are unusable"). If you're noting what we *don't* know, what we're *inferring*, or what a signal *doesn't* establish, that belongs under `Open questions / caveats:` — not under Evidence. Mixing them is the fastest way to make the evidence trail unfalsifiable.
@@ -91,19 +91,21 @@ DON'T (prose citation instead of markdown link — fails the link-count check, a
 
 **Empty-state for Evidence sections — don't write meta-rows.** When `Evidence for:` or `Evidence against:` has no claims yet, leave the section with NO bullets, or write a single italicized empty marker: `_(none yet)_`. Do NOT write meta-rows like "No counter-evidence in current data" or "No direct contradicting signal" as bullets — those are not claims, they're commentary on the absence of claims. They fail the orphan-evidence audit (no provenance tag) AND mislead future readers into thinking "absence of evidence has been documented as evidence." If you want to record that you actively looked and found nothing, put a one-liner under `Open questions / caveats:` (e.g., "Searched inherited interviews 2026-Q1; no Saver-persona objections found — gap, not negative evidence").
 
-## Usability risk
-### H-U1: …
+## Integration risk
+### H-I1: <one-sentence belief about whether this fits the existing stack and team capabilities>
 <same fields>
 
-## Feasibility risk
-### H-F1: …
+## Operational risk
+### H-Op1: <one-sentence belief about whether the team can run and maintain this at scale>
+<same fields>
 
-## Viability risk
-### H-B1: …
+## Cost / vendor risk
+### H-C1: <one-sentence belief about whether this is commercially and contractually sustainable>
+<same fields>
 
-## Other risk
-### H-O1: <one-sentence belief>
-<!-- For risks that don't fit the canonical four: regulatory, ethical, partnership-dependency, brand, security, internal-political, etc. Name the risk type in the heading. -->
+## Migration risk
+### H-M1: <one-sentence belief about whether the team can realistically get from current state to this architecture>
+<!-- For risks around: migration complexity, downtime windows, data integrity, team capability gaps, security during transition, vendor lock-in, regulatory constraints on change. -->
 <same fields>
 
 ## Lifecycle
@@ -118,5 +120,5 @@ DON'T (prose citation instead of markdown link — fails the link-count check, a
 
 When evidence is sufficient to promote a hypothesis, the system MUST:
 1. Mark the hypothesis `promoted` with the resolution note.
-2. Create a corresponding decision file in `decisions/` referencing the hypothesis.
-3. Surface the promotion to the PM in the task summary.
+2. Create a corresponding decision file (ADR) in `decisions/` referencing the hypothesis.
+3. Surface the promotion to the SA in the task summary.

@@ -1,10 +1,10 @@
 # Decision Record Schema
 
-> **Read this schema before writing or editing a decision file.** Especially § *Provenance enforcement*. The `no_orphan_evidence` structural check rejects decision files where any `## Evidence` or `## Explicitly NOT doing` row lacks a provenance tag from the canonical enum.
+> **Read this schema before writing or editing a decision file (Architecture Decision Record / ADR).** Especially § *Provenance enforcement*. The `no_orphan_evidence` structural check rejects decision files where any `## Evidence` or `## Explicitly NOT doing` row lacks a provenance tag from the canonical enum.
 >
 > **Pre-save self-check** (run mentally before every write to a decision file):
 > 1. **COUNT-THE-TAGS.** Count the number of bullet rows under `## Evidence` and `## Explicitly NOT doing` in your draft. Count the number of provenance tags in those rows. The two numbers MUST match. If you have 6 evidence rows and 4 tags, you have 2 orphans — add tags before saving (or move the bullets to `## Remaining ambiguities` if they aren't really evidence). This single check catches the most common failure mode: paraphrasing a claim from an ingestion record into an Evidence row and forgetting the tag.
-> 2. Every row under `## Evidence` and `## Explicitly NOT doing` carries one tag from the provenance enum (`[ingestion/...]`, `[source/...]`, `(stakeholder-verbal, <name>, <YYYY-MM-DD>)`, `(intuition, PM, <YYYY-MM-DD>)`, `(industry-knowledge)`, `(chat, no artifact)`).
+> 2. Every row under `## Evidence` and `## Explicitly NOT doing` carries one tag from the provenance enum (`[ingestion/...]`, `[source/...]`, `(stakeholder-verbal, <name>, <YYYY-MM-DD>)`, `(intuition, SA, <YYYY-MM-DD>)`, `(industry-knowledge)`, `(chat, no artifact)`).
 > 3. Path-typed tags (`[ingestion/...]`, `[source/...]`) are written as markdown links (`[ingestion/...](../ingestion/...)`), not as parenthetical prose like `(Acme interview, 2026-04-22)`.
 > 4. Each path-typed link, when followed from THIS file (`decisions/<file>.md`), resolves — i.e. `../ingestion/<rest>` or `../source/<rest>` (one `..`).
 > 5. `## Status` is one of `pending | decided | superseded`. `proposed` is an accepted synonym for `pending`. Do not invent other values.
@@ -76,15 +76,15 @@ The same enum used in hypotheses applies here. Each Evidence and Explicitly-NOT 
 - `[ingestion/...]` — went through synthesis
 - `[source/...]` — direct citation to raw artifact
 - `(stakeholder-verbal, <name>, <YYYY-MM-DD>)`
-- `(intuition, PM, <YYYY-MM-DD>)`
+- `(intuition, SA, <YYYY-MM-DD>)`
 - `(industry-knowledge)`
 - `(chat, no artifact)`
 
-A decision rendered from mixed-trust evidence (a common case during migration) MUST wear that mix on its face — a reader should not have to spelunk to learn how much of the reasoning is inherited-and-not-revalidated vs PM-collected-and-fresh.
+A decision rendered from mixed-trust evidence (a common case during migration) MUST wear that mix on its face — a reader should not have to spelunk to learn how much of the reasoning is inherited-and-not-revalidated vs SA-collected-and-fresh.
 
 ## Rules
 
 - Every shipped feature should have at least one decision record.
-- When a hypothesis is `promoted`, a decision is auto-drafted (PM confirms).
+- When a hypothesis is `promoted`, a decision (ADR) is auto-drafted (SA confirms).
 - Decisions are append-only. To reverse, write a new decision that references and supersedes the old one (set the old one's status to `superseded`).
 - **Decision debt:** decisions with `status: pending` are unresolved forks. Maintenance surfaces them — especially when their blocker impact is high or deadline is approaching.

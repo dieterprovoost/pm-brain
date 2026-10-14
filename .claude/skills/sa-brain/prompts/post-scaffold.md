@@ -99,23 +99,14 @@ Self-test receipt:
 - Commands resolved: 6/6 (ingest, prep, review, ideate, risk, plan).
 - Links walked: 47. Broken: 3. Fixed: 3.
 - Coverage checks: 6/6 categories scanned. 2 gaps flagged as next moves.
-- TODO fields (PM-fillable): 12 across 8 files (see list).
+- TODO fields (SA-fillable): 12 across 8 files (see list).
 - Auto-maintained fields left blank: 9 (correct).
 - Contradictions surfaced: 2.
 ```
 
 This block goes in the final message to the SA, not just internal reasoning.
 
-## 6. Commit
-
-- Run `git rev-parse --is-inside-work-tree` in the **current working directory** (not any subfolder).
-- If yes: stage all scaffolded files. Single commit titled `feat: initialize SA brain`.
-- If no: `git init` in the **current working directory**, then stage and commit as above.
-- **Critical:** git init must run in the working directory where the skill was invoked, not inside any scaffolded subfolder. The provenance chain (`source/` → `ingestion/` → `knowledge/`) must be inside the same repo.
-- **Never push remotely.** The SA controls when and where this is published.
-- If any git step fails, surface the error and stop. No destructive recovery.
-
-## 7. Hand off
+## 6. Hand off
 
 Final message to the operator. Order matters:
 

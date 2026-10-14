@@ -87,15 +87,7 @@ Load `prompts/post-scaffold.md`. Run:
 4. Surface 1-3 contradictions found during scaffolding (or say explicitly "none found").
 5. Print the self-test receipt.
 
-### 7. Commit
-
-- Run `git rev-parse --is-inside-work-tree` in the **current working directory**.
-- If already a repo: stage all scaffolded files. Single commit titled `feat: initialize SA brain`.
-- If not a repo: `git init` in the current working directory, then stage and commit.
-- **Never push remotely.** SA controls publication.
-- If any git step fails, surface the error and stop. No destructive recovery.
-
-### 8. Hand off
+### 7. Hand off
 
 Lead with the habit loop, not the scaffold. See `prompts/post-scaffold.md § 7` for the exact ordering:
 
@@ -114,7 +106,6 @@ Then stop and wait for the operator's first real task.
 - **Creating a nested `sa-brain/` subfolder.** The current working directory **is** the project root.
 - **Skipping the self-test.** Broken links are memory corruption, not cosmetic.
 - **Inventing contradictions.** If migration mode found no genuine conflicts, say so. Don't fabricate.
-- **Pushing remotely.** PM controls when and where this gets published.
 
 ## Files in this skill
 

@@ -50,7 +50,7 @@ claude
 /sa-brain
 ```
 
-The skill detects what's already in the directory. An empty folder gets a fresh start (**greenfield**). A folder with existing SA artifacts (architecture docs, RFPs, vendor proposals, PoC results) gets read and absorbed (**migration**). Either way, a short 5-batch interview captures org, scope, and current architecture priorities. The scaffold drops in, the brain commits locally. Never pushes.
+The skill detects what's already in the directory. An empty folder gets a fresh start (**greenfield**). A folder with existing SA artifacts (architecture docs, RFPs, vendor proposals, PoC results) gets read and absorbed (**migration**). Either way, a short 5-batch interview captures org, scope, and current architecture priorities. The scaffold drops in.
 
 > **Migration is for your current state. Don't backfill old artifacts retroactively.** Migration mode reads your active strategy, in-flight evaluations, recent decisions, current stakeholder list. That's the goal. Don't try to manually `/ingest` years of old architecture docs and vendor proposals. If a stale artifact matters, it'll come up through current work and you'll ingest it then. Forcing them in now wastes a weekend and clogs the durable layer.
 
